@@ -25,7 +25,7 @@ RUN apk add --no-cache \
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Hadoop
-ENV HADOOP_VERSION=3.2.0
+ENV HADOOP_VERSION=3.2.1
 ENV HADOOP_HOME /usr/hadoop
 RUN curl --progress-bar -L --retry 3 \
   "http://archive.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz" \
@@ -53,7 +53,7 @@ RUN curl --progress-bar -L \
   && chmod 777 "${HIVE_HOME}/var/log"
 
 # Spark
-ENV SPARK_VERSION=2.4.5
+ENV SPARK_VERSION=3.0.1
 ENV SPARK_PACKAGE "spark-${SPARK_VERSION}-bin-without-hadoop"
 ENV SPARK_HOME /usr/spark
 RUN curl --progress-bar -L --retry 3 \
@@ -65,7 +65,7 @@ RUN curl --progress-bar -L --retry 3 \
 # For inscrutable reasons, Spark distribution doesn't include spark-hive.jar
 # Livy attempts to load it though, and will throw
 # java.lang.ClassNotFoundException: org.apache.spark.sql.hive.HiveContext
-ARG SCALA_VERSION=2.11
+ARG SCALA_VERSION=2.12
 RUN curl --progress-bar -L \
     "https://repo1.maven.org/maven2/org/apache/spark/spark-hive_${SCALA_VERSION}/${SPARK_VERSION}/spark-hive_${SCALA_VERSION}-${SPARK_VERSION}.jar" \
     --output "${SPARK_HOME}/jars/spark-hive_${SCALA_VERSION}-${SPARK_VERSION}.jar"
